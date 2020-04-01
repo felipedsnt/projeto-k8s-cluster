@@ -1,0 +1,7 @@
+[local]
+localhost ansible_connection=local ansible_python_interpreter=python gather_facts=false
+
+[kubernetes]
+192.168.15.44
+192.168.15.45
+192.168.15.46
