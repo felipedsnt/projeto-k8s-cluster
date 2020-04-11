@@ -2,7 +2,7 @@
 - name: Instalando o pip
   apt:
     name:
-      - pip
+      - python-pip
 
 - name: Instalando dependencias dos modulos do k8s
   pip:
@@ -17,7 +17,7 @@
     owner: root
     group: root
     mode: 0644
-    register: copiando_deploy_app_v1
+  register: copiando_deploy_app_v1
 
 - name: Copiando o arquivo de deployment da app v2
   template:
@@ -26,16 +26,18 @@
     owner: root
     group: root
     mode: 0644
-    register: copiando_deploy_app_v2
+  register: copiando_deploy_app_v2
 
 - name: Deploy da app-v2
   k8s:
     state: present
+    namespace: default
     src: /opt/giropops/app-v2.yml
 
 - name: Scale down da app-v1
   k8s:
     state: present
+    namespace: default
     src: /opt/giropops/app-v1.yml
 
 - name: Dentro de 02 minutos o app-v1 sera removido. Pressione ctrl+c para cancelar
@@ -45,4 +47,5 @@
 - name: Removendo o app-v1
   k8s:
     state: absent
+    namespace: default
     src: /opt/giropops/app-v1.yml
